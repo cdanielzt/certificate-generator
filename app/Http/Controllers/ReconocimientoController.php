@@ -72,6 +72,7 @@ class ReconocimientoController extends Controller
 
             $reconocimiento->razon = $request->razon;
             $reconocimiento->curso_id = $request->curso;
+            
             $reconocimiento->fecha = $request->fecha;
             $reconocimiento->design_id = $request->design;
             $reconocimiento->save();
@@ -92,12 +93,12 @@ class ReconocimientoController extends Controller
         $reconocimiento = Reconocimiento::find($id);
         $pdf = PDF::loadView('pdf.center',compact('reconocimiento'))->setOptions(
             [
-            'defaultFont' => 'sans-serif',
-             'isRemoteEnabled' => true])
+             'isRemoteEnabled' => true,
+             'isHtml5ParserEnabled' => true])
              ->setPaper('letter', 'landscape')
              ->setWarnings(true);
         
-        return $pdf->download($reconocimiento->codigo .'-'. $reconocimiento->cliente->nombre . '.pdf');
+        return $pdf->stream($reconocimiento->codigo .'-'. $reconocimiento->cliente->nombre . '.pdf');
     }
 
 

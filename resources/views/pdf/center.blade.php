@@ -4,36 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="{{asset('css/square.css')}}">
+    <style>
+        body{
+            font-family: 'Poppins';
+            background-image: url({{ asset('images/design/fondo-circle.jpg')}});
+        }
+        
+        @font-face {
+        font-family: 'Poppins';
+        font-weight: normal;
+        src: url({{asset('fonts/Poppins-Regular.ttf')}}) format('truetype');
+        }
+
+        @font-face {
+        font-family: 'Poppins';
+        font-weight: bold;
+        src: url({{asset('fonts/Poppins-Bold.ttf')}}) format('truetype');
+        }
+       
+    </style>
     <title></title>
 </head>
 <body>
-    <img src="{{asset('images/logo-coparmex.png')}}" alt="" width="300px" class="my-5">
+    <div class="contenido">
+    <img src="{{asset('images/logo-coparmex.png')}}" alt="" width="300px" class="logo">
 
-    
-    <div class="otorga">
-        <p>{{$reconocimiento->otorga}}</p>
-    </div>
+  
+        <p class="otorga">{{$reconocimiento->otorga}}</p>
+  
 
-    <div class="marquee">
-        <p>{{$reconocimiento->tipo}}</p>
-    </div>
 
-    <div class="to">
-        <p>A</p>
-    </div>
+        <p class="marquee">{{$reconocimiento->tipo}}</p>
 
-    <div class="person">
-        <p>{{$reconocimiento->cliente->nombre}}</p>
-    </div> 
 
-    <div class="reason">
-        <p>{{$reconocimiento->razon}} <b>"{{$reconocimiento->curso->nombre}}"</b>
+
+        <p class="to">A</p>
+
+
+ 
+        <p class="person">{{$reconocimiento->cliente->nombre}}</p>
+
+
+
+        <p class="reason">{{$reconocimiento->razon}} <b>"{{$reconocimiento->curso->nombre}}"</b>
             llevado a cabo el día <b>{{$reconocimiento->fecha}}</b></p>
-    </div>
+ 
 
+        <p class="codigo">Código: {{$reconocimiento->codigo}}</p>
+
+        </div>
 </body>
 
-    <div class="codigo">
-        <p>{{$reconocimiento->codigo}}</p>
-    </div>
+
+
 </html>
