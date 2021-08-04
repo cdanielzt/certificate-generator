@@ -72,7 +72,6 @@ class ReconocimientoController extends Controller
 
             $reconocimiento->razon = $request->razon;
             $reconocimiento->curso_id = $request->curso;
-            
             $reconocimiento->fecha = $request->fecha;
             $reconocimiento->design_id = $request->design;
             $reconocimiento->save();
@@ -91,6 +90,23 @@ class ReconocimientoController extends Controller
     public function download($id)
     {
         $reconocimiento = Reconocimiento::find($id);
+        $meses = array(
+            "01"  => "Enero",
+            "02"  => "Febrero",
+            "03"  => "Marzo",
+            "04"  => "Abril",
+            "05"  => "Mayo",
+            "06"  => "Junio",
+            "07"  => "Julio",
+            "08"  => "Agosto",
+            "09"  => "Septiembre",
+            "10"  => "Octubre",
+            "11"  => "Noviembre",
+            "12"  => "Diciembre",
+        );
+        $fecha = $reconocimiento->fecha;
+        list($año, $mes, $dia ) = explode('-', $fecha);
+        $reconocimiento->fecha = $dia . ' de ' . $meses[$mes] . ' de ' . $año; 
         $pdf = PDF::loadView('pdf.center',compact('reconocimiento'))->setOptions(
             [
              'isRemoteEnabled' => true,

@@ -7,7 +7,7 @@
     <style>
         body{
             font-family: 'Poppins';
-            background-image: url({{ asset('images/design/fondo-circle.jpg')}});
+            background-image: url({{ asset($reconocimiento->design->imagen)}});
         }
         
         @font-face {
@@ -47,7 +47,7 @@
 
 
         <p class="reason">{{$reconocimiento->razon}} <b>"{{$reconocimiento->curso->nombre}}"</b>
-            llevado a cabo el día <b>{{$reconocimiento->fecha}}</b></p>
+            llevado a cabo el día <b>{{$reconocimiento->fecha}}.</b></p>
  
 
         <p class="codigo">Código: {{$reconocimiento->codigo}}</p>
