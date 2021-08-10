@@ -114,7 +114,7 @@ class ReconocimientoController extends Controller
              ->setPaper('letter', 'landscape')
              ->setWarnings(true);
         
-        return $pdf->stream($reconocimiento->codigo .'-'. $reconocimiento->cliente->nombre . '.pdf');
+        return $pdf->download($reconocimiento->codigo .'-'. $reconocimiento->cliente->nombre . '.pdf');
     }
 
 
@@ -126,7 +126,32 @@ class ReconocimientoController extends Controller
      */
     public function show($id)
     {
-        return view('diseños.view');
+        $reconocimiento = Reconocimiento::find($id);
+        $meses = array(
+            "01"  => "Enero",
+            "02"  => "Febrero",
+            "03"  => "Marzo",
+            "04"  => "Abril",
+            "05"  => "Mayo",
+            "06"  => "Junio",
+            "07"  => "Julio",
+            "08"  => "Agosto",
+            "09"  => "Septiembre",
+            "10"  => "Octubre",
+            "11"  => "Noviembre",
+            "12"  => "Diciembre",
+        );
+        $fecha = $reconocimiento->fecha;
+        list($año, $mes, $dia ) = explode('-', $fecha);
+        $reconocimiento->fecha = $dia . ' de ' . $meses[$mes] . ' de ' . $año; 
+        $pdf = PDF::loadView('pdf.center',compact('reconocimiento'))->setOptions(
+            [
+             'isRemoteEnabled' => true,
+             'isHtml5ParserEnabled' => true])
+             ->setPaper('letter', 'landscape')
+             ->setWarnings(true);
+        
+        return $pdf->stream($reconocimiento->codigo .'-'. $reconocimiento->cliente->nombre . '.pdf');
     }
 
     /**
@@ -160,7 +185,10 @@ class ReconocimientoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reconocimiento = Reconocimiento::find($id);
+        $reconocimiento->delete();
+
+        return redirect('/reconocimientos');
     }
 
 }
