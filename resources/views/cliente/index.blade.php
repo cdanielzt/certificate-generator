@@ -33,7 +33,9 @@
             <tr>
                 <td>{{  $cliente->id  }}</td>
                 <td>{{  $cliente->nombre  }}</td>
-                <td>{{  $cliente->email  }}</td>
+                <td> 
+                    <a href="mailto:{{$cliente->email}}">{{$cliente->email}}</a>
+                </td>
                 <td>{{  $cliente->telefono  }}</td>
                 <td  class="text-center">
                         @if( $cliente->es_socio == 1)
