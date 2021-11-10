@@ -18,7 +18,6 @@ class CreateClientesTable extends Migration
             $table->string('nombre');
             $table->string('email')->nullable()->unique();
             $table->string('telefono')->nullable();
-            $table->boolean('es_socio')->default(false);
             $table->timestamps();
             
         });
