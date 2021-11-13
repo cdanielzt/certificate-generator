@@ -3,14 +3,14 @@
 @section('title', 'Clientes')
 
 @section('content_header')
-  <div class="container-xxl mx-3">
+  <div class="container-xl my-3">
     <h1>Ver Cliente</h1>
   </div>
 @stop
 
 @section('content')
 
-<div class="container">
+<div class="container-xl">
     <div class="main-body">
         <div class="row">
             <div class="col-lg-4">
@@ -64,15 +64,6 @@
                                 <input type="text" class="form-control" value="{{ $cliente->telefono}}" name="telefono">
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Socio Coparmex</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="checkbox" class="form-check-input" id="es_socio" name="es_socio" {{ ($cliente->es_socio == 1 ? 'checked' : '')}}> 
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
@@ -82,36 +73,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="d-flex align-items-center mb-3">Cursos y Talleres</h5>
-                                <p>Web Design</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>Website Markup</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>One Page</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>Mobile Template</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>Backend API</p>
-                                <div class="progress" style="height: 5px">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -123,5 +84,4 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
 @stop

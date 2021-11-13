@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Design;
+use Illuminate\Support\Facades\Storage;
 
 class DiseñoController extends Controller
 {
@@ -37,19 +38,14 @@ class DiseñoController extends Controller
     public function store(Request $request)
     {
         $design = new Design();
-
         if($request->hasFile('imagen')){
-            $file = $request->file('imagen');
-            $destinationPath ='images/cursos/design/';
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $uploadSuccess = $request->file('imagen')->move($destinationPath, $filename);
-            $design->imagen =  $destinationPath . $filename;
+            $design->imagen = $request->file('file')->store('posts','public');
         }
 
         $design->nombre = $request->nombre;
 
         $design->save();
-        return redirect('/designs');
+        return back()->with('status','Creado con éxito');
     }
 
     /**
@@ -92,11 +88,11 @@ class DiseñoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Design $design)
     {
-        $design = Design::find($id);
+        Storage::disk('public')->delete($design->image);
         $design->delete();
-        return redirect('/diseños');
+        return back()->with('status', 'Eliminando con éxito');
     }
 
  

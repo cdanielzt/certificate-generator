@@ -31,7 +31,7 @@
                     <div class="card-body d-flex flex-row justify-content-between">
                         <h5 class="card-title row">{{ $design->nombre }}</h5>
                         <div>
-                            <form action="{{ route('designs.destroy', $design->id) }}" method="POST">
+                            <form action="{{ route('designs.destroy', $design) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
 
@@ -82,6 +82,11 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
+                                    @if (session('status'))
+                                        <div class="alert alert-success" role="alert">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
                                         <div class="d-flex flex-column align-items-center text-center">
                                             <h4>Imagen</h4>
                                             <img src="https://png.pngitem.com/pimgs/s/150-1503945_transparent-user-png-default-user-image-png-png.png"

@@ -19,6 +19,11 @@
           <div class="col-lg-4">
               <div class="card">
                   <div class="card-body">
+                  @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                       <div class="d-flex flex-column align-items-center text-center">
                         <h4>Imagen</h4>
                           <img src="https://png.pngitem.com/pimgs/s/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="Imagen del curso" class=" bg-gray" width="110">
