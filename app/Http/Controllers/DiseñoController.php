@@ -15,7 +15,7 @@ class DiseñoController extends Controller
      */
     public function index()
     {
-        $design = Design::orderBy('id','desc')->paginate(2);
+        $design = Design::orderBy('id','desc')->paginate(4);
         return view('designs.index')->with('designs', $design);
     }
 
@@ -39,7 +39,8 @@ class DiseñoController extends Controller
     {
         $design = new Design();
         if($request->hasFile('imagen')){
-            $design->imagen = $request->file('file')->store('posts','public');
+            $fileName = 'design-'.time().'.'.$request->file('imagen')->getClientOriginalExtension();
+            $design->imagen = $request->file('imagen')->storeAs('posts',$fileName,'public');
         }
 
         $design->nombre = $request->nombre;
@@ -90,10 +91,11 @@ class DiseñoController extends Controller
      */
     public function destroy(Design $design)
     {
-        Storage::disk('public')->delete($design->image);
-        $design->delete();
+        if(Storage::disk('public')->delete($design->imagen)){
+            $design->delete();
+        }
         return back()->with('status', 'Eliminando con éxito');
-    }
 
+    }
  
 }

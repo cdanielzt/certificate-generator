@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Reconocimiento::created(function($reconocimiento){
             $date = Carbon::now();
             $date = $date->format('Ymd');
-            $reconocimiento->codigo = 'CPMX' . $date . $reconocimiento->id;
+            $reconocimiento->codigo = 'FET' . $date . $reconocimiento->id;
             $reconocimiento->save();
         });
     }
