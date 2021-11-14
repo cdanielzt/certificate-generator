@@ -28,12 +28,3 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard');
     })->name('dashboard');
 });
-
-
-
-Route::get('/prueba', function () {
-    return view('pdf.center');
-});
-
-
-
