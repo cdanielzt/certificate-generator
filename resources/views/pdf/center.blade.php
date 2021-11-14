@@ -30,25 +30,8 @@
     <img src="{{asset('images/logo-coparmex.png')}}" alt="" width="300px" class="logo">
 
   
-        <p class="otorga">{{$reconocimiento->otorga}}</p>
-  
-
-
-        <p class="marquee">{{$reconocimiento->tipo}}</p>
-
-
-
-        <p class="to">A</p>
-
-
- 
         <p class="person">{{$reconocimiento->cliente->nombre}}</p>
 
-
-
-        <p class="reason">{{$reconocimiento->razon}} <b>"{{$reconocimiento->curso->nombre}}"</b>
-            llevado a cabo el día <b>{{$reconocimiento->fecha}}.</b></p>
- 
 
         <p class="codigo">Código: {{$reconocimiento->codigo}}</p>
 

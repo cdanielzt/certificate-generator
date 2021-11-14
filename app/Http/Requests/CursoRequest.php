@@ -25,7 +25,7 @@ class CursoRequest extends FormRequest
     {
         return [
             'nombre' => 'required',
-
+            'imagen' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

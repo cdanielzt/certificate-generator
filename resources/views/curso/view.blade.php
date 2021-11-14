@@ -95,7 +95,7 @@
                                 <h4>{{ $curso->nombre }}</h4>
                             </div>
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ asset($curso->imagen) }}" alt="Imagen del curso" class=" bg-gray"
+                                <img src="{{ asset('storage/'.$curso->imagen) }}" alt="Imagen del curso" class=" bg-gray"
                                     width="90%">
                             </div>
                         </div>

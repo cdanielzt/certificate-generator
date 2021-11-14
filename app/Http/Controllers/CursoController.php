@@ -43,17 +43,11 @@ class CursoController extends Controller
      */
     public function store(CursoRequest $request)
     {
-
-        $validated = $request->validated();
-
         $curso = new Curso();
 
         if($request->hasFile('imagen')){
-            $file = $request->file('imagen');
-            $destinationPath ='images/cursos/';
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $uploadSuccess = $request->file('imagen')->move($destinationPath, $filename);
-            $curso->imagen =  $destinationPath . $filename;
+            $fileName = 'curso-'.time().'.'.$request->file('imagen')->getClientOriginalExtension();
+            $curso->imagen = $request->file('imagen')->storeAs('courses',$fileName,'public');
         }
 
         $curso->nombre = $request->nombre;
@@ -87,7 +81,8 @@ class CursoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $curso = Curso::findOrFail($id);
+        return view('curso.edit', compact('curso'));
     }
 
     /**
@@ -99,16 +94,11 @@ class CursoController extends Controller
      */
     public function update(CursoRequest $request, $id)
     {
-        $validated = $request->validated();
-
         $curso = Curso::find($id);
 
         if($request->hasFile('imagen')){
-            $file = $request->file('imagen');
-            $destinationPath ='images/cursos/';
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $uploadSuccess = $request->file('imagen')->move($destinationPath, $filename);
-            $curso->imagen =  $destinationPath . $filename;
+            $fileName = 'curso-'.time().'.'.$request->file('imagen')->getClientOriginalExtension();
+            $curso->imagen = $request->file('imagen')->storeAs('courses',$fileName,'public');
         }
 
         $curso->nombre = $request->nombre;
@@ -127,6 +117,8 @@ class CursoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $curso = Curso::find($id);
+        $curso->delete();
+        return redirect('/cursos')->with("status", "Eliminado con exito");
     }
 }

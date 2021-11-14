@@ -25,7 +25,7 @@
                                 <label for="curso-{{ $curso->id }}" class="purpose-radio-label course">
                                   
                                    @if($curso->imagen)
-                                   <img src="{{ asset($curso->imagen) }}" alt="branding"
+                                   <img src="{{ asset('storage/'.$curso->imagen) }}" alt="branding"
                                    class="img-thumbnail rounded mx-auto d-block curso-img" border="0">
                                    @else
                                    <img src="{{ asset('images/cursos/default-course-img.jpg') }}" alt="branding"
@@ -53,7 +53,7 @@
                               <label for="design-{{ $design->id }}" class="purpose-radio-label">
                                 
     
-                                 <img src="{{ asset($design->imagen) }}" alt="branding"
+                                 <img src="{{ asset('storage/'.$design->imagen) }}" alt="branding"
                                  class="img-thumbnail rounded mx-auto d-block curso-img" border="0">
     
            
