@@ -47,7 +47,8 @@
                                 <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                             </svg>
                         </a>
-                        
+                        <a href="/reconocimientos/{{$reconocimiento->id}}/sendEmail" class="btn btn-light btn-sm">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M24 21h-24v-18h24v18zm-23-16.477v15.477h22v-15.477l-10.999 10-11.001-10zm21.089-.523h-20.176l10.088 9.171 10.088-9.171z"/></svg>                        </a>
                         @csrf 
                         @method('DELETE')
                         <button href="/reconocimiento" class="btn btn-light btn-sm" type="submit">

@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('cursos', 'App\Http\Controllers\CursoController');
     Route::resource('asistenciaCursos', 'App\Http\Controllers\AsistenciaCursoController');
     Route::get('reconocimientos/{codigo}/download', 'App\Http\Controllers\ReconocimientoController@download');
+    Route::get('reconocimientos/{codigo}/sendEmail', 'App\Http\Controllers\ReconocimientoController@sendEmail');
     Route::resource('reconocimientos', 'App\Http\Controllers\ReconocimientoController');
     Route::resource('designs', 'App\Http\Controllers\DiseñoController');
     Route::get('/dashboard', function () {
@@ -32,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //Routes for mailing
-Route::get('/email', function(){
-    Mail::to('cdanielzt@gmail.com')->send(new ReconocimientoMail());
-    return new ReconocimientoMail();
-});
+// Route::get('/email', function(){
+//     Mail::to('cdanielzt@gmail.com')->send(new ReconocimientoMail());
+//     return new ReconocimientoMail();
+// });

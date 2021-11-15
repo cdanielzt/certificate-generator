@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReconocimientoMail;
 use PDF;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Models\Design;
 use App\Models\Curso;
 use App\Models\AsistenciaCurso;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class ReconocimientoController extends Controller
 {
@@ -60,7 +62,7 @@ class ReconocimientoController extends Controller
                 $reconocimiento->curso_id = $request->curso;
                 $reconocimiento->fecha = $request->fecha;
                 $reconocimiento->design_id = $request->design;
-
+                $this->sendEmail($reconocimiento);
                 $reconocimiento->save();
             }
         } else {
@@ -167,6 +169,11 @@ class ReconocimientoController extends Controller
             ->setPaper('letter', 'landscape')
             ->setWarnings(true);
         return $pdf->stream($reconocimiento->codigo . '-' . $reconocimiento->cliente->nombre . '.pdf');
+    }
+
+    public function sendEmail($id){
+        $reconocimiento = Reconocimiento::find($id);
+        Mail::to($reconocimiento->cliente->email)->send(new ReconocimientoMail($id));
     }
 
     /**

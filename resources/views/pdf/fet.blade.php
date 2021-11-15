@@ -28,10 +28,10 @@
         .name {
             color: #0071CE;
             font-weight: bold;
-            margin-top: 300px;
+            margin-top: 308px;
             margin-bottom: 0;
-            margin-left: 70px;
-            font-size: 35px;
+            margin-left: 100px;
+            font-size: 24px;
             text-transform: uppercase;
         }
 
@@ -47,7 +47,7 @@
 
 <body>
     <div class="contenido">
-        <p class="name">{{$reconocimiento->cliente->nombre}}</p>
+        <p class="name">{{$reconocimiento->cliente->nombre}}aaaaaaaa</p>
         <p class="codigo">Código: {{$reconocimiento->codigo}}</p>
     </div>
 </body>

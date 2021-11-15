@@ -1,12 +1,9 @@
 @component('mail::message')
-# Reconocimiento
+# ¡Muchas Gracias!
 
-Te hacemos entrega de tu reconocimiento por asistir al 4° Foro Emprendedor Tapachula
+ Esperamos que tu asistencia al 4° Foro Emprendedor Tapachula haya sido una gran experiencia, te hacemos entrega de su reconocimiento por tu destacada participación. 
+ 
+ Esperamos contar con tu presencia para el próximo Foro en su quinta edición.
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
-
-Gracias, el equipo.<br>
-{{ config('app.name') }}
+*Atentamente El equipo del FET*
 @endcomponent
