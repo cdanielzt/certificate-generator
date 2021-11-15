@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\ReconocimientoMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+//Routes for mailing
+Route::get('/email', function(){
+    Mail::to('cdanielzt@gmail.com')->send(new ReconocimientoMail());
+    return new ReconocimientoMail();
 });
