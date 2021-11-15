@@ -31,10 +31,10 @@ class ReconocimientoController extends Controller
      */
     public function create()
     {
-        $design = Design::orderBy('id', 'desc')->get();
+        $designs = Design::orderBy('id', 'desc')->get();
         $cursos = Curso::orderBy('id', 'desc')->paginate(3);
         $asistencias = AsistenciaCurso::all();
-        return view('reconocimiento.create')->with('cursos', $cursos)->with('designs', $design)->with('asistencias', $asistencias);
+        return view('reconocimiento.create', compact('designs','cursos','asistencias'));
     }
 
     /**
@@ -89,7 +89,6 @@ class ReconocimientoController extends Controller
      */
     public function download($id)
     {
-        dd($id);
         $reconocimiento = Reconocimiento::find($id);
         $meses = array(
             "01"  => "Enero",
