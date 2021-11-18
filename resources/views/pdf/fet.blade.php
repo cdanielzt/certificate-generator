@@ -47,7 +47,7 @@
 
 <body>
     <div class="contenido">
-        <p class="name">{{$reconocimiento->cliente->nombre}}aaaaaaaa</p>
+        <p class="name">{{$reconocimiento->cliente->nombre}}</p>
         <p class="codigo">Código: {{$reconocimiento->codigo}}</p>
     </div>
 </body>

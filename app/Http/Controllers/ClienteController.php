@@ -92,8 +92,6 @@ class ClienteController extends Controller
         $cliente->nombre = $request->get('nombre');
         $cliente->email = $request->get('email');
         $cliente->telefono = $request->get('telefono');
-        $cliente->es_socio = ($request->get('es_socio') == 'on') ? 1 : 0;
-  
 
         $cliente->save();
         return redirect()->back();

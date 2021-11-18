@@ -37,12 +37,6 @@
       <label for="" class="form-label">Teléfono</label>
       <input type="text" name="telefono" class="form-control" id="telefono" value="{{ $cliente->telefono}}">
     </div>
-
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="es_socio" name="es_socio" {{ ($cliente->es_socio == 1 ? 'checked' : '')}}> 
-      <label class="form-check-label" for="" >Socio Coparmex</label>
-    </div>
-    
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a href="/clientes" class="btn btn-danger">Cancelar</a>
 </form>

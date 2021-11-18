@@ -12,6 +12,7 @@ use App\Models\Curso;
 use App\Models\AsistenciaCurso;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ReconocimientoController extends Controller
 {
@@ -36,7 +37,7 @@ class ReconocimientoController extends Controller
         $designs = Design::orderBy('id', 'desc')->get();
         $cursos = Curso::orderBy('id', 'desc')->paginate(3);
         $asistencias = AsistenciaCurso::all();
-        return view('reconocimiento.create', compact('designs','cursos','asistencias'));
+        return view('reconocimiento.create', compact('designs', 'cursos', 'asistencias'));
     }
 
     /**
@@ -55,15 +56,14 @@ class ReconocimientoController extends Controller
                 $reconocimiento = new Reconocimiento();
                 $reconocimiento->otorga = $request->otorga;
                 $reconocimiento->tipo = $request->tipo;
-
-                $reconocimiento->cliente_id = $asistente->id;
-
+                $reconocimiento->cliente_id = $asistente->cliente_id;
                 $reconocimiento->razon = $request->razon;
                 $reconocimiento->curso_id = $request->curso;
                 $reconocimiento->fecha = $request->fecha;
                 $reconocimiento->design_id = $request->design;
-                $this->sendEmail($reconocimiento);
                 $reconocimiento->save();
+                $this->savePDF($reconocimiento);
+                $this->sendEmail($reconocimiento->id);
             }
         } else {
             $reconocimiento = new Reconocimiento();
@@ -77,66 +77,35 @@ class ReconocimientoController extends Controller
             $reconocimiento->fecha = $request->fecha;
             $reconocimiento->design_id = $request->design;
             $reconocimiento->save();
+            $this->savePDF($reconocimiento);
+            $this->sendEmail($reconocimiento->id);
         }
 
         return redirect('reconocimientos');
     }
 
-
-    /**
-     * Download the specified document.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function download($id)
+    public function savePDF($reconocimiento)
     {
-        $reconocimiento = Reconocimiento::find($id);
-        $meses = array(
-            "01"  => "Enero",
-            "02"  => "Febrero",
-            "03"  => "Marzo",
-            "04"  => "Abril",
-            "05"  => "Mayo",
-            "06"  => "Junio",
-            "07"  => "Julio",
-            "08"  => "Agosto",
-            "09"  => "Septiembre",
-            "10"  => "Octubre",
-            "11"  => "Noviembre",
-            "12"  => "Diciembre",
-        );
-        $fecha = $reconocimiento->fecha;
-        list($año, $mes, $dia) = explode('-', $fecha);
-        $reconocimiento->fecha = $dia . ' de ' . $meses[$mes] . ' de ' . $año;
-        $pdf = PDF::loadView('pdf.fet', compact('reconocimiento'))->setOptions(
-            [
-                'isRemoteEnabled' => true,
-                'isHtml5ParserEnabled' => true
-            ]
-        )
-            ->setPaper('letter', 'landscape')
-            ->setWarnings(true);
 
-        return $pdf->download($reconocimiento->codigo . '-' . $reconocimiento->cliente->nombre . '.pdf');
+        $content = $this->getPDF($reconocimiento->id)->download()->getOriginalContent();
+
+        Storage::put("public/pdf/{$this->getFileName($reconocimiento)}", $content);
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getFileName($reconocimiento)
     {
-        $opciones_ssl=array(
-            "ssl"=>array(
-            "verify_peer"=>false,
-            "verify_peer_name"=>false,
-            ),
-            );
+        return $reconocimiento->codigo . '-' . $reconocimiento->cliente->nombre . '.pdf';
+    }
+
+    public function getPDF($id)
+    {
         $reconocimiento = Reconocimiento::find($id);
+        $opciones_ssl = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+            ),
+        );
         $img_path = 'storage/' . $reconocimiento->design->imagen;
         $extencion = pathinfo($img_path, PATHINFO_EXTENSION);
         $data = file_get_contents($img_path, false, stream_context_create($opciones_ssl));
@@ -168,12 +137,45 @@ class ReconocimientoController extends Controller
         )
             ->setPaper('letter', 'landscape')
             ->setWarnings(true);
-        return $pdf->stream($reconocimiento->codigo . '-' . $reconocimiento->cliente->nombre . '.pdf');
+
+        return $pdf;
     }
 
-    public function sendEmail($id){
+
+    /**
+     * Download the specified document.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function download($id)
+    {
         $reconocimiento = Reconocimiento::find($id);
-        Mail::to($reconocimiento->cliente->email)->send(new ReconocimientoMail($id));
+        return $this->getPDF($id)->download($this->getFileName($reconocimiento));
+        // Guardar los pdf generados para poder enviarlos por correo
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $reconocimiento = Reconocimiento::find($id);
+        return $this->getPDF($id)->stream($this->getFileName($reconocimiento));
+    }
+
+    public function sendEmail($id)
+    {
+        $reconocimiento = Reconocimiento::find($id);
+        $email = $reconocimiento->cliente->email;
+        $pdf = $this->getPDF($reconocimiento->id)->output();
+        if ($email) {
+            Mail::to($email)->send(new ReconocimientoMail($id,$pdf));
+        }
     }
 
     /**
@@ -208,8 +210,19 @@ class ReconocimientoController extends Controller
     public function destroy($id)
     {
         $reconocimiento = Reconocimiento::find($id);
-        $reconocimiento->delete();
-
+        if($reconocimiento){
+            $this->deleteFile($reconocimiento);
+            $reconocimiento->delete();
+        }
         return redirect('/reconocimientos');
+    }
+
+    public function deleteFile($reconocimiento){
+        $file ="public/pdf/{$this->getFileName($reconocimiento)}";
+        if (Storage::delete($file)) {
+            echo "Eliminado";
+        } else {
+            echo "File does not exist";
+        }
     }
 }
