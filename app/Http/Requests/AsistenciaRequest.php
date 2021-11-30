@@ -24,7 +24,7 @@ class AsistenciaRequest extends FormRequest
     public function rules()
     {
         return [
-            'cliente_id' => 'required|unique:asistencia_cursos',
+            'cliente_id' => 'required',
             'curso_id' => 'required'
         ];
     }

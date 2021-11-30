@@ -15,7 +15,7 @@ class CreateAsistenciaCursosTable extends Migration
     {
         Schema::create('asistencia_cursos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cliente_id')->unique();
+            $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
 
             $table->unsignedBigInteger('curso_id');

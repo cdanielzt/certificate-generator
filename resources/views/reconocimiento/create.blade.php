@@ -80,12 +80,12 @@
 
           <div class="col-md-12">
             <label for="" class="form-label">Otorga</label>
-            <input type="text" name="otorga" class="form-control" id="otorga" value="{{ old('otorga')}}" placeholder="Otorga el presente">
+            <input type="text" name="otorga" class="form-control" id="otorga" value="a" placeholder="Otorga el presente">
           </div>
 
           <div class="col-md-12">
             <label for="" class="form-label">Tipo de documento</label>
-            <input type="text" name="tipo" class="form-control" id="tipo" value="{{ old('tipo')}}" placeholder="Reconocimiento">
+            <input type="text" name="tipo" class="form-control" id="tipo" value="a" placeholder="Reconocimiento">
           </div>
 
           <div class="col-12 my-2">
@@ -105,7 +105,7 @@
 
           <div class="col-md-12">
             <label for="" class="form-label">Razón</label>
-            <input type="text" name="razon" class="form-control" id="razon" value="{{ old('razon')}}" placeholder="Por su destacada participación en la ponencia">
+            <input type="text" name="razon" class="form-control" id="razon" value="a" placeholder="Por su destacada participación en la ponencia">
           </div>
 
 

@@ -47,7 +47,7 @@ class AsistenciaCursoController extends Controller
         
         foreach($request->input('cliente_id') as $cliente_id){
             $asistencia = new AsistenciaCurso();
-            if( !(AsistenciaCurso::where('cliente_id','=', $cliente_id)->exists()) ){
+            if( !(AsistenciaCurso::where('curso_id',$request->curso_id)->where('cliente_id',$cliente_id)->exists()) ){
                 $asistencia->cliente_id = $cliente_id;
                 $asistencia->curso_id = $request->curso_id;
                 $asistencia->save();

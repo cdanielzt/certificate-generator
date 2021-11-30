@@ -56,6 +56,7 @@
                                                 <tbody>
                                                     @foreach ($curso->asistenciasCurso as $asistenciaCurso)
                                                         <tr>
+                                                            <td>{{ $asistenciaCurso->cliente->id }}</td>
                                                             <td>{{ $asistenciaCurso->cliente->nombre }}</td>
                                                             <td class="text-right">
                                                                 <form

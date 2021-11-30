@@ -28,19 +28,29 @@
         .name {
             color: #0071CE;
             font-weight: bold;
-            margin-top: 308px;
+            margin-top: 374px;
             margin-bottom: 0;
-            margin-left: 100px;
-            font-size: 24px;
+            margin-left: 70px;
+            font-size: 22px;
             text-transform: uppercase;
         }
 
+        .name.fet{
+            margin-top: 307px; 
+
+        }
+
         .codigo {
-            margin-top: 380px;
-            font-size: 20px;
+            margin-top: 335px; 
+            font-size: 15px;
             color: #999;
             page-break-after: avoid;
         }
+
+        .codigo.fet{
+            margin-top: 390px;
+        }
+
     </style>
     <title></title>
 </head>

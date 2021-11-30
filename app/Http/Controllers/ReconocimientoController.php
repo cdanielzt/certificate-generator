@@ -66,12 +66,11 @@ class ReconocimientoController extends Controller
                 $this->sendEmail($reconocimiento->id);
             }
         } else {
+            foreach ($request->cliente_id as $cliente_id) {
             $reconocimiento = new Reconocimiento();
             $reconocimiento->otorga = $request->otorga;
             $reconocimiento->tipo = $request->tipo;
-
-            $reconocimiento->cliente_id = $request->cliente_id;
-
+            $reconocimiento->cliente_id = $cliente_id;
             $reconocimiento->razon = $request->razon;
             $reconocimiento->curso_id = $request->curso;
             $reconocimiento->fecha = $request->fecha;
@@ -79,6 +78,7 @@ class ReconocimientoController extends Controller
             $reconocimiento->save();
             $this->savePDF($reconocimiento);
             $this->sendEmail($reconocimiento->id);
+            }
         }
 
         return redirect('reconocimientos');
